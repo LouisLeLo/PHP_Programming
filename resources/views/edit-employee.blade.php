@@ -36,6 +36,11 @@
         <br>
         Địa chỉ: <input type="text" name="diachi" value="{{ $employee->diachi }}">
         <br>
-        <button type="submit">Chỉnh sửa</button>
+        <div>
+            <button style="margin-right: 150px">
+                <a href="{{ route('show.employee') }}">Hủy bỏ</a>
+            </button>
+            <button type="submit">Hoàn tất</button>
+        </div>
     </form>
 @endsection

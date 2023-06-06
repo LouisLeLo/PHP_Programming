@@ -44,6 +44,12 @@
             @endforeach
         </select>
         <br>
-        <button type="submit">Tạo mới</button>
+        <div>
+            <button style="margin-right: 150px">
+                <a href="{{ route('show.employee') }}">Quay về</a>
+            </button>
+            <button type="submit">Tạo mới</button>
+        </div>
+
     </form>
 @endsection

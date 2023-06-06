@@ -1,6 +1,16 @@
 @extends('layouts.home')
 
 @section('content')
+    <div style="background-color: yellowgreen">
+        @role('admin')
+            I'm a admin
+            <p>{{ Auth::user()->name }}</p>
+        @else
+            <p>{{ Auth::user()->name }}</p>
+            I'm not a admin
+        @endrole
+    </div>
+
     <h2 style="display: flex; justify-content: center">DANH SÁCH NHÂN VIÊN</h2>
 
     <div style="margin-left: 340px">
@@ -29,7 +39,7 @@
         </div>
     </div>
 
-    <form action="{{route('employee.export')}}" method="post" id="exportForm">
+    <form action="{{ route('employee.export') }}" method="post" id="exportForm">
         @csrf
         <input type="text" name="ids" style="margin-left: 340px" id="hiddenvalues">
         <input type="button" value="Xuất" onclick="export_function()">
@@ -53,9 +63,12 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $i = 1;
+            @endphp
             @foreach ($employees as $employee)
                 <tr>
-                    <th>{{ $employee->id }}</th>
+                    <th>{{ $i++ }}</th>
                     <th>
                         @if (!empty($employee->avatar))
                             <img width="90" height="90" style="border-radius: 30%"
@@ -124,10 +137,12 @@
 @section('scripts')
     <script>
         function export_function() {
-            var hiddenInput = $("#hiddenvalues");
+            var hiddenInput = $("#hiddenvalues"); //Lấy cái thẻ input
             var checked_ids = [];
             $("input[name='name_cua_checkbox']:checked").each(function() {
-                    checked_ids.push($(this).data('id'));
+                checked_ids.push($(this).data(
+                    'id'
+                )); //Lấy những ô checkbox đã check thên nó vô "checked_ids" với attribute có tên là data-id. "data('id')" tự ta quy định
             });
             hiddenInput.val(checked_ids);
             $("#exportForm").submit();
